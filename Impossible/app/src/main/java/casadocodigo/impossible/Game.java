@@ -4,10 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class Game extends AppCompatActivity {
+public class Game extends AppCompatActivity implements View.OnTouchListener {
     Impossible view;
 
     @Override
@@ -24,8 +26,16 @@ public class Game extends AppCompatActivity {
         // Game's Logic
         view = new Impossible(this);
 
+        view.setOnTouchListener(this);
+
         // Configure the View
         setContentView(view);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        view.moveDown(10);
+        return true;
     }
 
     @Override
