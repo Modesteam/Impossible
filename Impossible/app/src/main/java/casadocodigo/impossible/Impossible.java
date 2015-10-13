@@ -14,8 +14,10 @@ public class Impossible extends SurfaceView implements Runnable {
     Thread renderThread = null;
     SurfaceHolder holder;
     Paint paint;
-    private int playerY = 300;
-    private float enemyRadius;
+    private int playerY = 300, playerX = 300, playerRadius = 50;
+    private int enemyX, enemyY, enemyRadius = 50;
+    private double distance;
+    boolean gameover;
 
     public Impossible(Context context) {
         super(context);
@@ -25,19 +27,25 @@ public class Impossible extends SurfaceView implements Runnable {
 
     private void drawPlayer(Canvas canvas) {
         paint.setColor(Color.GREEN);
-        canvas.drawCircle(100, playerY, 100, paint);
+        canvas.drawCircle(playerX, playerY, 50, paint);
     }
 
     private void drawEnemy(Canvas canvas) {
         paint.setColor(Color.GRAY);
         enemyRadius++;
-        canvas.drawCircle(100, 100, enemyRadius, paint);
+        canvas.drawCircle(enemyX, enemyY, enemyRadius, paint);
     }
 
     public void moveDown(int pixels) {
         playerY += pixels;
     }
-
+    private void checkCollision(Canvas canvas) {
+        distance = Math.pow(playerY - enemyY, 2) + Math.pow(playerX - enemyX, 2);
+        distance = Math.sqrt(distance);
+        if (distance <= playerRadius + enemyRadius){
+            gameover = true;
+        }
+    }
     @Override
     public void run() {
         while(running) {
@@ -53,10 +61,21 @@ public class Impossible extends SurfaceView implements Runnable {
             // Draw the Player
             drawPlayer(canvas);
             drawEnemy(canvas);
-
+            checkCollision(canvas);
             // Update and free the canvas
             holder.unlockCanvasAndPost(canvas);
+            if(gameover){
+                stopGame(canvas);
+                break;
+            }
         }
+    }
+
+    private void stopGame(Canvas canvas){
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.LTGRAY);
+        paint.setTextSize(100);
+        canvas.drawText("GAMA OVER!", 50, 150, paint);
     }
 
     public void resume() {
