@@ -36,6 +36,16 @@ public class Game extends AppCompatActivity implements View.OnTouchListener {
     public boolean onTouch(View v, MotionEvent event) {
         view.moveDown(10);
         view.addScore(100);
+        if( event.getX() < 100 && event.getY() > 290 && event.getY() < 310){
+            view.init();
+        }
+
+        if(event.getX() < 100 && event.getY() > 490 && event.getY() < 510){
+            System.exit(0);
+        }
+
+        view.moveDown(10);
+        view.addScore(100);
         return true;
     }
 
