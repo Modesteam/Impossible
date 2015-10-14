@@ -15,7 +15,7 @@ public class Impossible extends SurfaceView implements Runnable {
     Thread renderThread = null;
     SurfaceHolder holder;
     Paint paint;
-    private int playerY = 300, playerX = 300, playerRadius = 50;
+    private int playerY = 300, playerX = 300, playerRadius = 45;
     private int enemyX, enemyY, enemyRadius = 50;
     private double distance;
     private int score;
