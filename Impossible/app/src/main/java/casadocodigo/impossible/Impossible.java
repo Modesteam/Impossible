@@ -17,6 +17,7 @@ public class Impossible extends SurfaceView implements Runnable {
     private int playerY = 300, playerX = 300, playerRadius = 50;
     private int enemyX, enemyY, enemyRadius = 50;
     private double distance;
+    private int score;
     boolean gameover;
 
     public Impossible(Context context) {
@@ -25,9 +26,20 @@ public class Impossible extends SurfaceView implements Runnable {
         holder = getHolder();
     }
 
+    public void addScore(int points){
+        score += points;
+    }
+
     private void drawPlayer(Canvas canvas) {
         paint.setColor(Color.GREEN);
         canvas.drawCircle(playerX, playerY, 50, paint);
+    }
+
+    private void drawScore(Canvas canvas){
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(50);
+        canvas.drawText(String.valueOf(score), 50, 200, paint);
     }
 
     private void drawEnemy(Canvas canvas) {
@@ -61,13 +73,16 @@ public class Impossible extends SurfaceView implements Runnable {
             // Draw the Player
             drawPlayer(canvas);
             drawEnemy(canvas);
+            drawScore(canvas);
             checkCollision(canvas);
             // Update and free the canvas
-            holder.unlockCanvasAndPost(canvas);
+
             if(gameover){
                 stopGame(canvas);
-                break;
+                running = false;
             }
+            holder.unlockCanvasAndPost(canvas);
+
         }
     }
 
@@ -83,4 +98,5 @@ public class Impossible extends SurfaceView implements Runnable {
         renderThread = new Thread(this);
         renderThread.start();
     }
+
 }
