@@ -1,6 +1,7 @@
 package casadocodigo.impossible;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -32,7 +33,9 @@ public class Impossible extends SurfaceView implements Runnable {
 
     private void drawPlayer(Canvas canvas) {
         paint.setColor(Color.GREEN);
-        canvas.drawCircle(playerX, playerY, 50, paint);
+        canvas.drawBitmap(BitmapFactory.decodeResource(getResources(),
+                R.mipmap.nave), playerX-50, playerY-50, null);
+        // canvas.drawCircle(playerX, playerY, 50, paint);
     }
 
     private void drawScore(Canvas canvas){
@@ -43,7 +46,7 @@ public class Impossible extends SurfaceView implements Runnable {
     }
 
     private void drawEnemy(Canvas canvas) {
-        paint.setColor(Color.GRAY);
+        paint.setColor(Color.RED);
         enemyRadius++;
         canvas.drawCircle(enemyX, enemyY, enemyRadius, paint);
     }
@@ -61,6 +64,7 @@ public class Impossible extends SurfaceView implements Runnable {
     @Override
     public void run() {
         while(running) {
+
             // Confirm if the screen is ready
             if(!holder.getSurface().isValid()) {
                 continue;
@@ -69,6 +73,9 @@ public class Impossible extends SurfaceView implements Runnable {
             // Block the canvas
             Canvas canvas = holder.lockCanvas();
             canvas.drawColor(Color.BLACK);
+
+            canvas.drawBitmap(BitmapFactory.decodeResource(getResources(),
+                    R.mipmap.sky), 0, 0, null);
 
             // Draw the Player
             drawPlayer(canvas);
