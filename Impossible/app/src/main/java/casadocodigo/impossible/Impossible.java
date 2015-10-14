@@ -15,7 +15,7 @@ public class Impossible extends SurfaceView implements Runnable {
     Thread renderThread = null;
     SurfaceHolder holder;
     Paint paint;
-    private int playerY = 300, playerX = 300, playerRadius = 45;
+    private int playerY = 300, playerX = 300, playerRadius = 42;
     private int enemyX, enemyY, enemyRadius = 50;
     private double distance;
     private int score;
@@ -49,6 +49,22 @@ public class Impossible extends SurfaceView implements Runnable {
         paint.setColor(Color.RED);
         enemyRadius++;
         canvas.drawCircle(enemyX, enemyY, enemyRadius, paint);
+    }
+
+    private void drawRestart(Canvas canvas) {
+        paint.setColor(Color.GREEN);
+        canvas.drawRect(500,50,700,100,paint);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.BLACK);
+        canvas.drawText("Restart", 515, 95, paint);
+    }
+
+    private void drawExit(Canvas canvas) {
+        paint.setColor(Color.YELLOW);
+        canvas.drawRect(500,120,700,170,paint);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.BLACK);
+        canvas.drawText("Exit", 540, 165, paint);
     }
 
     public void moveDown(int pixels) {
@@ -97,14 +113,8 @@ public class Impossible extends SurfaceView implements Runnable {
 
     private void drawButtons(Canvas canvas){
 
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.WHITE);
-        canvas.drawText("Restart", 50, 300, paint);
-
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(30);
-        canvas.drawText("Exit", 50, 500, paint);
+        drawRestart(canvas);
+        drawExit(canvas);
     }
 
     private void stopGame(Canvas canvas){
